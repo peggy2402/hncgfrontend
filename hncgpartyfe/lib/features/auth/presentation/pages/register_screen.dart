@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/register_bloc.dart';
-import '../../data/repositories/auth_repository_impl.dart';
+import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/register_usecase.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,10 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocProvider(
       create: (context) => RegisterBloc(
         registerUseCase: RegisterUseCase(
-          AuthRepositoryImpl(
-            baseUrl: 'http://localhost:3000',
-            client: http.Client(),
-          ),
+          context.read<AuthRepository>(),
         ),
       ),
       child: Scaffold(
